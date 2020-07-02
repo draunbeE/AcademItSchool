@@ -1,4 +1,4 @@
-package ru.academit.khrushchev;
+package ru.academit.khrushchev.range;
 
 public class Main {
     public static void main(String[] args) {
