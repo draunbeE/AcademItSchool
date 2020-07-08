@@ -34,7 +34,7 @@ public class Range {
     }
 
     public Range getCrossingRange(Range range) {
-        return this.from < range.to && this.to > range.to || range.from < this.to && range.to > this.to
+        return this.from < range.to && this.to >= range.to || range.from < this.to && range.to >= this.to
                 ? new Range(Math.max(range.from, this.from), Math.min(range.to, this.to)) : null;
     }
 
@@ -47,9 +47,22 @@ public class Range {
     }
 
     public Range[] subtractRanges(Range range) {
-        if(this.from == range.from && this.to == range.to) {
-            return null;
+        if (this.from >= range.from && this.to <= range.to) {
+            return new Range[]{};
         }
 
-    return null;    }
+        if (this.to < range.from || this.from > range.to) {
+            return new Range[]{new Range(this.from, this.to)};
+        }
+
+        if (this.from < range.from && this.to >= range.from && this.to <= range.to) {
+            return new Range[]{new Range(this.from, range.from)};
+        }
+
+        if (this.from <= range.to && this.to > range.to && this.from >= range.from) {
+            return new Range[]{new Range(range.to, this.to)};
+        }
+
+        return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
+    }
 }
