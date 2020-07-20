@@ -13,8 +13,8 @@ public class Main {
         Shape firstGreatestAreaShape = getMaxAreaShape(shapes, 1);
         Shape secondGreatestAreaShape = getMaxAreaShape(shapes, 2);
 
-        System.out.println(firstGreatestAreaShape);
-        System.out.println(secondGreatestAreaShape);
+        System.out.printf("The first value area shape:%n" + firstGreatestAreaShape + "%n");
+        System.out.printf("The second value area shape:%n" + secondGreatestAreaShape + "%n");
 
         Shape rectangle = new Rectangle(5, 2);
 
