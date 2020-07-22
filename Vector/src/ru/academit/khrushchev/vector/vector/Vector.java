@@ -8,7 +8,7 @@ public class Vector {
 
     public Vector(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("Wrong value of n argument");
+            throw new IllegalArgumentException("n must be greater than 0");
         }
 
         this.n = n;
@@ -17,7 +17,7 @@ public class Vector {
 
     public Vector(int n, double[] components) {
         if (n <= 0) {
-            throw new IllegalArgumentException("Wrong value of n argument");
+            throw new IllegalArgumentException("n must be greater than 0");
         }
 
         this.n = n;
@@ -145,7 +145,6 @@ public class Vector {
         return resultVector;
     }
 
-    //todo test static methods of addition and subtraction. Should it consider whether one vector is greater than another.
     public static Vector subtractVectors(Vector vector1, Vector vector2) {
         Vector resultVector;
         double[] subtractedComponents;
