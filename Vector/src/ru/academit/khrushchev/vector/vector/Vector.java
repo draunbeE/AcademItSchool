@@ -7,8 +7,21 @@ public class Vector {
     final private double[] components;
 
     public Vector(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Wrong value of n argument");
+        }
+
         this.n = n;
         components = new double[n];
+    }
+
+    public Vector(int n, double[] components) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Wrong value of n argument");
+        }
+
+        this.n = n;
+        this.components = Arrays.copyOf(components, n);
     }
 
     public Vector(Vector vector) {
@@ -19,11 +32,6 @@ public class Vector {
     public Vector(double[] components) {
         this.n = components.length;
         this.components = components;
-    }
-
-    public Vector(int n, double[] components) {
-        this.n = n;
-        this.components = Arrays.copyOf(components, n);
     }
 
     public int getSize() {
@@ -38,8 +46,6 @@ public class Vector {
         components[componentIndex] = component;
     }
 
-
-    //todo check whether it rather to use copy-constructor in addition and subtraction methods;
     public Vector addVector(Vector vector) {
         Vector resultVector;
         double[] addedComponents;
@@ -139,22 +145,21 @@ public class Vector {
         return resultVector;
     }
 
-
     //todo test static methods of addition and subtraction. Should it consider whether one vector is greater than another.
     public static Vector subtractVectors(Vector vector1, Vector vector2) {
         Vector resultVector;
         double[] subtractedComponents;
 
-        if (vector1.getLength() > vector2.getLength()) {
-            resultVector = new Vector(vector1);
-            subtractedComponents = Arrays.copyOf(vector2.components, vector2.getSize());
-        } else {
+        if (vector2.getLength() > vector1.getLength()) {
             resultVector = new Vector(vector2);
             subtractedComponents = Arrays.copyOf(vector1.components, vector1.getSize());
 
             for (int i = vector1.getSize(); i < vector2.getSize(); i++) {
                 resultVector.components[i] *= -1;
             }
+        } else {
+            resultVector = new Vector(vector1);
+            subtractedComponents = Arrays.copyOf(vector2.components, vector2.getSize());
         }
 
         double[] resultComponents = resultVector.components;
@@ -164,6 +169,16 @@ public class Vector {
         }
 
         return resultVector;
+    }
+
+    public static double getVectorsScalarMultiplication(Vector vector1, Vector vector2) {
+        double result = 0;
+
+        for (int i = 0; i < Math.min(vector1.getSize(), vector2.getSize()); i++) {
+            result += vector1.components[i] * vector2.components[i];
+        }
+
+        return result;
     }
 
     @Override
