@@ -23,8 +23,8 @@ public class Main {
         System.out.println(Vector.subtractVectors(vector3, vector4));
         System.out.println(Vector.subtractVectors(vector4, vector3));
 
-        System.out.println(vector4.reverseVector());
-        System.out.println(vector4.reverseVector());
+//        System.out.println(vector4.reverseVector());
+//        System.out.println(vector4.reverseVector());
 
         System.out.println(vector3.getLength());
 
@@ -38,6 +38,6 @@ public class Main {
         System.out.println(Vector.getVectorsScalarMultiplication(vector3, vector4));
         System.out.println(Vector.getVectorsScalarMultiplication(vector4, vector3));
 
-        System.out.println(vector3.multiplyOnScalar(2));
+//        System.out.println(vector3.multiplyOnScalar(2));
     }
 }
