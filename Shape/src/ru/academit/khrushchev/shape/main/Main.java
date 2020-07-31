@@ -6,28 +6,26 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-//        Shape[] shapes = {
-//                new Circle(1),
-//                new Square(3),
-//                new Rectangle(8, 2.2),
-//                new Triangle(2, 4.1, 5.2, 3.1, 8.4, 9.2),
-//                new Circle(2),
-//                new Triangle(2, 2, 4, 2.1, 5.2, 3),
-//                new Rectangle(3, 8.6)
-//        };
-//
-//        Shape largestAreaShape = getLargestAreaShape(shapes);
-//        Shape secondLargestPerimeterShape = getSecondLargestPerimeterShape(shapes);
-//
-//        System.out.printf("The largest area shape:%n" + largestAreaShape + "%n");
-//        System.out.printf("The second largest perimeter shape:%n" + secondLargestPerimeterShape + "%n");
-//
-//        Shape rectangle = new Rectangle(5, 2);
-//
-//        System.out.println("Rectangle width equals = " + rectangle.getWidth());
-//        System.out.println("Rectangle height equals = " + rectangle.getHeight());
+        Shape[] shapes = {
+                new Circle(1),
+                new Square(3),
+                new Rectangle(8, 2.2),
+                new Triangle(2, 4.1, 5.2, 3.1, 8.4, 9.2),
+                new Circle(2),
+                new Triangle(2, 2, 4, 2.1, 5.2, 3),
+                new Rectangle(3, 8.6)
+        };
 
-        System.out.println(new Triangle(2, 4.1, 5.2, 3.1, 8.4, 9.2));
+        Shape largestAreaShape = getLargestAreaShape(shapes);
+        Shape secondLargestPerimeterShape = getSecondLargestPerimeterShape(shapes);
+
+        System.out.printf("The largest area shape:%n" + largestAreaShape + "%n");
+        System.out.printf("The second largest perimeter shape:%n" + secondLargestPerimeterShape + "%n");
+
+        Shape rectangle = new Rectangle(5, 2);
+
+        System.out.println("Rectangle width equals = " + rectangle.getWidth());
+        System.out.println("Rectangle height equals = " + rectangle.getHeight());
     }
 
     public static Shape getLargestAreaShape(Shape[] shapes) {
