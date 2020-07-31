@@ -10,7 +10,7 @@ public class Range {
     }
 
     public double getFrom() {
-        return this.from;
+        return from;
     }
 
     public void setFrom(double from) {
@@ -18,7 +18,7 @@ public class Range {
     }
 
     public double getTo() {
-        return this.to;
+        return to;
     }
 
     public void setTo(double to) {
@@ -33,12 +33,12 @@ public class Range {
         return number >= from && number <= to;
     }
 
-    public Range getCross(Range range) {
-        if (from < range.to && to > range.from) {
-            return new Range(Math.max(range.from, from), Math.min(range.to, to));
+    public Range getIntersection(Range range) {
+        if (from >= range.to && to <= range.from) {
+            return null;
         }
 
-        return null;
+        return new Range(Math.max(range.from, from), Math.min(range.to, to));
     }
 
     public Range[] getUnion(Range range) {

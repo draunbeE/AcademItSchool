@@ -1,6 +1,6 @@
 package ru.academit.khrushchev.matrix.matrix;
 
-import ru.academit.khrushchev.vector.vector.Vector;
+import ru.academit.khrushchev.vector.Vector;
 
 import java.util.Arrays;
 

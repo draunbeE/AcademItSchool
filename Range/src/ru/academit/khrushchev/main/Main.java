@@ -28,7 +28,7 @@ public class Main {
         System.out.println();
 
         //Range task second part
-        Range crossingRange = range2.getCross(range1);
+        Range crossingRange = range2.getIntersection(range1);
 
         if (crossingRange == null) {
             System.out.println("Ranges are not crossed");

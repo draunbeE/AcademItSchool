@@ -1,4 +1,4 @@
-package ru.academit.khrushchev.matrix.matrix;
+package ru.academit.khrushchev.vector;
 
 import java.util.Arrays;
 
@@ -44,10 +44,6 @@ public class Vector {
 
     public void setComponent(double component, int componentIndex) {
         components[componentIndex] = component;
-    }
-
-    public double[] getComponents() {
-        return components;
     }
 
     public Vector addVector(Vector vector) {
@@ -96,26 +92,16 @@ public class Vector {
         return resultVector;
     }
 
-    public Vector multiplyOnScalar(double scalar) {
-        Vector resultVector = new Vector(this);
-        double[] resultVectorComponents = resultVector.components;
-
-        for (int i = 0; i < resultVectorComponents.length; i++) {
-            resultVectorComponents[i] *= scalar;
+    public void multiplyOnScalar(double scalar) {
+        for (int i = 0; i < components.length; i++) {
+            components[i] *= scalar;
         }
-
-        return resultVector;
     }
 
-    public Vector reverseVector() {
-        Vector resultVector = new Vector(this);
-        double[] resultVectorComponents = resultVector.components;
-
-        for (int i = 0; i < resultVectorComponents.length; i++) {
-            resultVectorComponents[i] *= -1;
+    public void reverseVector() {
+        for (int i = 0; i < components.length; i++) {
+            components[i] *= -1;
         }
-
-        return resultVector;
     }
 
     public double getLength() {
