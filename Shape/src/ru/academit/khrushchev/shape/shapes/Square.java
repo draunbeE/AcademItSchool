@@ -7,6 +7,10 @@ public class Square implements Shape {
         this.sideLength = sideLength;
     }
 
+    public double getSideLength() {
+        return sideLength;
+    }
+
     public void setSideLength(double sideLength) {
         this.sideLength = sideLength;
     }
@@ -43,7 +47,7 @@ public class Square implements Shape {
             return true;
         }
 
-        if (obj == null || obj.getClass() != this.getClass()) {
+        if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
 

@@ -1,4 +1,6 @@
-package ru.academit.khrushchev.shape.shapes;
+package ru.academit.khrushchev.shape.main;
+
+import ru.academit.khrushchev.shape.shapes.Shape;
 
 import java.util.Comparator;
 
