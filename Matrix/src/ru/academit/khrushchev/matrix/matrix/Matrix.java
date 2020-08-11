@@ -5,139 +5,144 @@ import ru.academit.khrushchev.vector.Vector;
 import java.util.Arrays;
 
 public class Matrix {
-    private final int linesAmount;
-    private final int lineLength;
-    private final Vector[] lines;
+    private Vector[] rows;
 
-    public Matrix(int linesAmount, int lineLength) {
-        this.linesAmount = linesAmount;
-        this.lineLength = lineLength;
+    public Matrix(int rowsAmount, int rowLength) {
+        if (rowsAmount == 0 || rowLength == 0) {
+            throw new IllegalArgumentException("Matrix sizes must be more than 0. Now rowsAmount is " + rowsAmount +
+                    " rowLength is " + +rowLength);
+        }
 
-        lines = new Vector[linesAmount];
+        rows = new Vector[rowsAmount];
 
-        Arrays.fill(lines, new Vector(lineLength));
+        for (int i = 0; i < rows.length; i++) {
+            rows[i] = new Vector(rowLength);
+        }
     }
 
     public Matrix(Matrix matrix) {
-        linesAmount = matrix.linesAmount;
-        lineLength = matrix.lineLength;
+        rows = new Vector[matrix.rows.length];
 
-        lines = Arrays.copyOf(matrix.lines, linesAmount);
+        for (int i = 0; i < rows.length; i++) {
+            rows[i] = new Vector(matrix.rows[i]);
+        }
     }
 
     public Matrix(double[][] matrix) {
-        int maxLineLength = 0;
+        int maxRowLength = 0;
 
-        for (double[] line : matrix) {
-            maxLineLength = Math.max(maxLineLength, line.length);
+        for (double[] row : matrix) {
+            maxRowLength = Math.max(maxRowLength, row.length);
         }
 
-        linesAmount = matrix.length;
-        lineLength = maxLineLength;
+        int rowsAmount = matrix.length;
 
-        lines = new Vector[linesAmount];
+        rows = new Vector[rowsAmount];
 
-        for (int i = 0; i < linesAmount; i++) {
-            lines[i] = new Vector(maxLineLength, matrix[i]);
+        for (int i = 0; i < rowsAmount; i++) {
+            rows[i] = new Vector(maxRowLength, matrix[i]);
         }
     }
 
-    public Matrix(Vector[] lines) {
-        int maxLineLength = 0;
+    public Matrix(Vector[] rows) {
+        int maxRowLength = 0;
 
-        for (Vector line : lines) {
-            maxLineLength = Math.max(maxLineLength, line.getSize());
+        for (Vector row : rows) {
+            maxRowLength = Math.max(maxRowLength, row.getSize());
         }
 
-        linesAmount = lines.length;
-        lineLength = maxLineLength;
-        this.lines = new Vector[linesAmount];
-        double[] components = new double[lineLength];
+        int rowsAmount = rows.length;
+        int rowLength = maxRowLength;
+        this.rows = new Vector[rowsAmount];
+        double[] components = new double[rowLength];
 
-        for (int i = 0; i < linesAmount; i++) {
-            for (int j = 0; j < lines[i].getSize(); j++) {
-                components[j] = lines[i].getComponent(j);
+        for (int i = 0; i < rowsAmount; i++) {
+            for (int j = 0; j < rows[i].getSize(); j++) {
+                components[j] = rows[i].getComponent(j);
             }
 
-            this.lines[i] = new Vector(lineLength, components);
+            this.rows[i] = new Vector(rowLength, components);
         }
     }
 
-    public int getLinesAmount() {
-        return linesAmount;
+    public int getRowsAmount() {
+        return rows.length;
     }
 
     public int getColumnsAmount() {
-        return lineLength;
+        return rows[0].getSize();
     }
 
-    public void setLine(Vector line, int lineIndex) {
-        if (lineIndex < 0 || lineIndex >= lines.length) {
-            throw new IllegalArgumentException("Argument lineIndex must be >= 0 and less than lines amount");
+    public void setRow(Vector row, int rowIndex) {
+        if (rowIndex < 0 || rowIndex >= rows.length) {
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount");
         }
 
-        lines[lineIndex] = line;
+        rows[rowIndex] = new Vector(row);
     }
 
-    public Vector getLine(int lineIndex) {
-        if (lineIndex < 0 || lineIndex >= lines.length) {
-            throw new IllegalArgumentException("Argument lineIndex must be >= 0 and less than lines amount");
+    public Vector getRow(int rowIndex) {
+        if (rowIndex < 0 || rowIndex >= rows.length) {
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount");
         }
 
-        return lines[lineIndex];
+        return new Vector(rows[rowIndex]);
     }
 
     public Vector getColumn(int columnIndex) {
-        if (columnIndex < 0 || columnIndex >= lineLength) {
-            throw new IllegalArgumentException("Argument columnIndex must be >= 0 and less than line length");
+        if (columnIndex < 0 || columnIndex >= rows[0].getSize()) {
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount");
         }
 
-        Vector column = new Vector(linesAmount);
+        Vector column = new Vector(rows.length);
 
-        for (int i = 0; i < linesAmount; i++) {
-            column.setComponent(lines[i].getComponent(columnIndex), i);
+        for (int i = 0; i < rows.length; i++) {
+            column.setComponent(i, rows[i].getComponent(columnIndex));
         }
 
         return column;
     }
 
-    public Matrix transpose() {
-        int matrixLinesAmount = linesAmount;
-        Vector[] lines = new Vector[matrixLinesAmount];
+    public void transpose() {
+        Matrix oldMatrix = new Matrix(this);
 
-        for (int i = 0; i < matrixLinesAmount; i++) {
-            lines[i] = getColumn(i);
+        rows = new Vector[rows[0].getSize()];
+        int matrixRowsAmount = rows.length;
 
+        for (int i = 0; i < matrixRowsAmount; i++) {
+            rows[i] = new Vector(oldMatrix.getColumn(i));
         }
-
-        return new Matrix(lines);
     }
 
-    public void multiplyOnScalar(double scalar) {
-        double resultComponent;
-
-        for (int i = 0; i < linesAmount; i++) {
-            for (int j = 0; j < lineLength; j++) {
-                resultComponent = lines[i].getComponent(j) * scalar;
-                lines[i].setComponent(resultComponent, j);
-            }
+    public void multiplyByScalar(double scalar) {
+        for (Vector row : rows) {
+            row.multiplyByScalar(scalar);
         }
     }
 
     public double getDeterminant() {
-        if (linesAmount == 2) {
-            return lines[0].getComponent(0) * lines[1].getComponent(1) -
-                    lines[0].getComponent(1) * lines[1].getComponent(0);
+        if (rows.length != rows[0].getSize()) {
+            throw new IllegalArgumentException("Matrix must be square. Now sizes are " + rows.length +
+                    " and " + rows[0].getSize());
+        }
+
+        if (rows.length == 1) {
+            return rows[0].getComponent(0);
+        }
+
+        if (rows.length == 2) {
+            return rows[0].getComponent(0) * rows[1].getComponent(1) -
+                    rows[0].getComponent(1) * rows[1].getComponent(0);
         }
 
         double determinant = 0;
 
         final int i = 0;
 
-        for (int j = 0; j < lineLength; j++) {
+        for (int j = 0; j < rows[0].getSize(); j++) {
             Matrix minor = getMinor(j);
 
-            determinant += minor.getDeterminant() * Math.pow(-1, i + j + 2) * lines[i].getComponent(j);
+            determinant += minor.getDeterminant() * Math.pow(-1, i + j + 2) * rows[i].getComponent(j);
         }
 
 
@@ -145,20 +150,20 @@ public class Matrix {
     }
 
     private Matrix getMinor(int column) {
-        if (column < 0 || column >= lineLength) {
-            throw new IllegalArgumentException("Argument column must be >= 0 and less than line length");
+        if (column < 0 || column >= rows[0].getSize()) {
+            throw new IllegalArgumentException("Argument column must be >= 0 and less than row length");
         }
 
-        final int line = 0;
-        final int linesAmount = getLinesAmount();
+        final int row = 0;
+        final int rowsAmount = getRowsAmount();
         final int columnsAmount = getColumnsAmount();
 
-        Vector[] resultLines = new Vector[linesAmount - 1];
-        Vector resultLine = new Vector(columnsAmount - 1);
+        Vector[] resultRows = new Vector[rowsAmount - 1];
+        Vector resultRow = new Vector(columnsAmount - 1);
 
-        for (int i = 0, k = 0; i < linesAmount; i++, k++) {
-            if (i == line) {
-                if (i == linesAmount - 1) {
+        for (int i = 0, k = 0; i < rowsAmount; i++, k++) {
+            if (i == row) {
+                if (i == rowsAmount - 1) {
                     break;
                 }
 
@@ -176,140 +181,96 @@ public class Matrix {
                     continue;
                 }
 
-                resultLine.setComponent(lines[i].getComponent(j), m);
+                resultRow.setComponent(m, rows[i].getComponent(j));
             }
 
-            resultLines[k] = new Vector(resultLine);
+            resultRows[k] = new Vector(resultRow);
         }
 
-        return new Matrix(resultLines);
+        return new Matrix(resultRows);
     }
 
-    public Matrix multiplyOnVector(Vector vector) {
-        Matrix resultMatrix;
-
-        if (lineLength == vector.getSize()) {
-            resultMatrix = new Matrix(vector.getSize(), 1);
-        } else if (linesAmount == vector.getSize() && lineLength == 1) {
-            resultMatrix = new Matrix(vector.getSize(), vector.getSize());
-        } else {
-            throw new IllegalArgumentException("Matrix must be a column if vector is a line. " +
-                    "Or matrix width must yields to vector length");
+    public Vector multiplyByVector(Vector vector) {
+        if (vector.getSize() != rows[0].getSize()) {
+            throw new IllegalArgumentException("Vector size must equals to matrix columns amount. " +
+                    "Now vector size is " + vector.getSize() + " matrix columns amount is " + rows[0].getSize());
         }
 
+        Vector resultVector = new Vector(rows.length);
         double resultNumber;
-        double number;
 
-        for (int i = 0; i < resultMatrix.linesAmount; i++) {
+        for (int i = 0; i < rows.length; i++) {
             resultNumber = 0;
-            number = vector.getComponent(i);
-            Vector resultVector = new Vector(resultMatrix.lineLength);
 
-            for (int j = 0; j < lineLength; j++) {
-                resultNumber += number * lines[i].getComponent(j);
+            for (int j = 0; j < rows[i].getSize(); j++) {
+                resultNumber += rows[i].getComponent(j) * vector.getComponent(j);
             }
 
-            for (int k = 0; k < resultVector.getSize(); k++) {
-                resultVector.setComponent(resultNumber, k);
-            }
-
-            resultMatrix.setLine(resultVector, i);
+            resultVector.setComponent(i, resultNumber);
         }
+
+        return resultVector;
+    }
+
+    public void add(Matrix matrix) {
+        if (rows.length != matrix.rows.length || rows[0].getSize() != matrix.rows[0].getSize()) {
+            throw new IllegalArgumentException("Matrices sizes must be equal");
+        }
+
+        for (int i = 0; i < rows.length; i++) {
+            rows[i].add(matrix.rows[i]);
+        }
+    }
+
+    public void subtract(Matrix matrix) {
+        if (rows.length != matrix.rows.length || rows[0].getSize() != matrix.rows[0].getSize()) {
+            throw new IllegalArgumentException("Matrices sizes must be equal");
+        }
+
+        for (int i = 0; i < rows.length; i++) {
+            rows[i].subtract(matrix.rows[i]);
+        }
+    }
+
+    public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
+        Matrix resultMatrix = new Matrix(matrix1);
+
+        resultMatrix.add(matrix2);
 
         return resultMatrix;
     }
 
-    public void addMatrix(Matrix matrix) {
-        if (!this.equals(matrix)) {
-            throw new IllegalArgumentException("Matrices sizes must equals");
-        }
+    public static Matrix getSubtraction(Matrix matrix1, Matrix matrix2) {
+        Matrix resultMatrix = new Matrix(matrix1);
 
-        double resultNumber;
-
-        for (int i = 0; i < linesAmount; i++) {
-            for (int j = 0; j < lineLength; j++) {
-                resultNumber = lines[i].getComponent(j) + matrix.lines[i].getComponent(j);
-                lines[i].setComponent(resultNumber, j);
-            }
-        }
-    }
-
-    public void subtractMatrix(Matrix matrix) {
-        if (!this.equals(matrix)) {
-            throw new IllegalArgumentException("Matrices sizes must equals");
-        }
-
-        double resultNumber;
-
-        for (int i = 0; i < linesAmount; i++) {
-            for (int j = 0; j < lineLength; j++) {
-                resultNumber = lines[i].getComponent(j) - matrix.lines[i].getComponent(j);
-                lines[i].setComponent(resultNumber, j);
-            }
-        }
-    }
-
-    public static Matrix addMatrices(Matrix matrix1, Matrix matrix2) {
-        if (!matrix1.equals(matrix2)) {
-            throw new IllegalArgumentException("Matrices sizes must equals");
-        }
-
-        Matrix resultMatrix = new Matrix(matrix1.linesAmount, matrix1.lineLength);
-        double resultNumber;
-
-        for (int i = 0; i < matrix1.linesAmount; i++) {
-            for (int j = 0; j < matrix1.lineLength; j++) {
-                resultNumber = matrix1.lines[i].getComponent(j) + matrix2.lines[i].getComponent(j);
-                resultMatrix.lines[i].setComponent(resultNumber, j);
-            }
-        }
+        resultMatrix.subtract(matrix2);
 
         return resultMatrix;
     }
 
-    public static Matrix subtractMatrices(Matrix matrix1, Matrix matrix2) {
-        if (!matrix1.equals(matrix2)) {
-            throw new IllegalArgumentException("Matrices sizes must equals");
-        }
-
-        Matrix resultMatrix = new Matrix(matrix1.linesAmount, matrix1.lineLength);
-        double resultNumber;
-
-        for (int i = 0; i < matrix1.linesAmount; i++) {
-            for (int j = 0; j < matrix1.lineLength; j++) {
-                resultNumber = matrix1.lines[i].getComponent(j) - matrix2.lines[i].getComponent(j);
-                resultMatrix.lines[i].setComponent(resultNumber, j);
-            }
-        }
-
-        return resultMatrix;
-    }
-
-    public static Matrix multiplyMatrices(Matrix matrix1, Matrix matrix2) {
-        if (matrix1.linesAmount != matrix2.lineLength || matrix1.lineLength != matrix2.linesAmount) {
+    public static Matrix getProduct(Matrix matrix1, Matrix matrix2) {
+        if (matrix1.rows[0].getSize() != matrix2.rows.length) {
             throw new IllegalArgumentException("Wrong matrices sizes");
         }
 
-        int resultMatrixSize = matrix2.lineLength;
-        Matrix resultMatrix = new Matrix(resultMatrixSize, resultMatrixSize);
+        Matrix resultMatrix = new Matrix(matrix1.rows.length, matrix1.rows.length);
+        Vector currentRow;
+        Vector currentColumn;
         double resultNumber;
 
-        for (int i = 0; i < matrix1.linesAmount; i++) {
-            Vector currentLine = matrix1.getLine(i);
-            Vector resultVector = new Vector(resultMatrixSize);
+        for (int i = 0; i < matrix1.rows.length; i++) {
+            currentRow = matrix1.rows[i];
 
-            for (int j = 0; j < matrix2.lineLength; j++) {
-                Vector column = matrix2.getColumn(j);
+            for (int j = 0; j < matrix1.rows.length; j++) {
+                currentColumn = matrix2.getColumn(j);
                 resultNumber = 0;
 
-                for (int k = 0; k < column.getSize(); k++) {
-                    resultNumber += currentLine.getComponent(k) * column.getComponent(k);
+                for (int k = 0; k < currentColumn.getSize(); k++) {
+                    resultNumber += currentRow.getComponent(k) * currentColumn.getComponent(k);
                 }
 
-                resultVector.setComponent(resultNumber, j);
+                resultMatrix.rows[i].setComponent(j, resultNumber);
             }
-
-            resultMatrix.setLine(resultVector, i);
         }
 
         return resultMatrix;
@@ -321,8 +282,8 @@ public class Matrix {
 
         stringBuilder.append("{");
 
-        for (Vector line : lines) {
-            stringBuilder.append(line.toString()).append(", ");
+        for (Vector row : rows) {
+            stringBuilder.append(row.toString()).append(", ");
         }
 
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length()).append("}");
@@ -342,6 +303,16 @@ public class Matrix {
 
         Matrix m = (Matrix) obj;
 
-        return m.lineLength == lineLength && m.linesAmount == linesAmount;
+        return Arrays.equals(m.rows, rows);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+
+        hash = hash * prime + Arrays.hashCode(rows);
+
+        return hash;
     }
 }

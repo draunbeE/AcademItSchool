@@ -4,9 +4,9 @@ public class Rectangle implements Shape {
     private double width;
     private double length;
 
-    public Rectangle(double lengthSide1, double lengthSide2) {
-        this.width = Math.min(lengthSide1, lengthSide2);
-        this.length = Math.max(lengthSide1, lengthSide2);
+    public Rectangle(double width, double length) {
+        this.width = width;
+        this.length = length;
     }
 
     public void setWidth(double width) {

@@ -13,21 +13,21 @@ public class Main {
         System.out.println(vector4);
 //        System.out.println(vector2);
 //
-//        vector3.addVector(vector4);
+//        vector3.add(vector4);
 //        System.out.println(vector3);
-//        vector4.addVector(vector3);
+//        vector4.add(vector3);
 //        System.out.println(vector4);
 
-//        System.out.println(Vector.getVectorsSum(vector3, vector4));
-//        System.out.println(Vector.getVectorsSum(vector4, vector3));
+//        System.out.println(Vector.getSum(vector3, vector4));
+//        System.out.println(Vector.getSum(vector4, vector3));
 //
-//        vector3.subtractVector(vector4);
+//        vector3.subtract(vector4);
 //        System.out.println(vector3);
-//        vector4.subtractVector(vector3);
+//        vector4.subtract(vector3);
 //        System.out.println(vector4);
 
-//        System.out.println(Vector.getVectorsSubtraction(vector3, vector4));
-//        System.out.println(Vector.getVectorsSubtraction(vector4, vector3));
+//        System.out.println(Vector.getSubtraction(vector3, vector4));
+//        System.out.println(Vector.getSubtraction(vector4, vector3));
 
 //        System.out.println(vector4.reverse());
 //        System.out.println(vector4.reverse());
@@ -41,8 +41,8 @@ public class Main {
 //        vector3.setComponent(5.2, 2);
 //        System.out.println(vector3.getComponent(2));
 //
-//        System.out.println(Vector.getVectorsScalarProduct(vector3, vector4));
-//        System.out.println(Vector.getVectorsScalarProduct(vector4, vector3));
+//        System.out.println(Vector.getScalarProduct(vector3, vector4));
+//        System.out.println(Vector.getScalarProduct(vector4, vector3));
 
 //        System.out.println(vector3.multiplyByScalar(2));
     }

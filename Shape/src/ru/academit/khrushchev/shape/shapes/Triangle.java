@@ -77,11 +77,11 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        final double side1 = getSide1();
-        final double side2 = getSide2();
-        final double side3 = getSide3();
+        double side1 = getSide(x1,y1,x2,y2);
+        double side2 = getSide(x1,y1,x3,y3);
+        double side3 = getSide(x2,y2,x3,y3);
 
-        final double perimeter = side1 + side2 + side3;
+        double perimeter = side1 + side2 + side3;
 
         double semiPerimeter = perimeter / 2;
 
@@ -90,23 +90,15 @@ public class Triangle implements Shape {
 
     @Override
     public double getPerimeter() {
-        final double side1 = getSide1();
-        final double side3 = getSide3();
-        final double side2 = getSide2();
+        double side1 = getSide(x1,y1,x2,y2);
+        double side2 = getSide(x1,y1,x3,y3);
+        double side3 = getSide(x2,y2,x3,y3);
 
         return side1 + side2 + side3;
     }
 
-    private double getSide1() {
-        return Math.sqrt(Math.pow(Math.abs(x1 - x2), 2) + Math.pow(Math.abs(y1 - y2), 2));
-    }
-
-    private double getSide2() {
-        return Math.sqrt(Math.pow(Math.abs(x1 - x3), 2) + Math.pow(Math.abs(y1 - y3), 2));
-    }
-
-    private double getSide3() {
-        return Math.sqrt(Math.pow(Math.abs(x2 - x3), 2) + Math.pow(Math.abs(y2 - y3), 2));
+    private double getSide(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
     @Override
