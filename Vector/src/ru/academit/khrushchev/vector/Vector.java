@@ -93,7 +93,7 @@ public class Vector {
         return resultVector;
     }
 
-    public static Vector getSubtraction(Vector vector1, Vector vector2) {
+    public static Vector getDifference(Vector vector1, Vector vector2) {
         Vector resultVector = new Vector(vector1);
 
         resultVector.subtract(vector2);

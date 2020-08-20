@@ -26,8 +26,8 @@ public class Main {
 //        vector4.subtract(vector3);
 //        System.out.println(vector4);
 
-//        System.out.println(Vector.getSubtraction(vector3, vector4));
-//        System.out.println(Vector.getSubtraction(vector4, vector3));
+//        System.out.println(Vector.getDifference(vector3, vector4));
+//        System.out.println(Vector.getDifference(vector4, vector3));
 
 //        System.out.println(vector4.reverse());
 //        System.out.println(vector4.reverse());

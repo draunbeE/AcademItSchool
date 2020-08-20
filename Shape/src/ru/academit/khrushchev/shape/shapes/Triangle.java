@@ -77,9 +77,9 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        double side1 = getSide(x1,y1,x2,y2);
-        double side2 = getSide(x1,y1,x3,y3);
-        double side3 = getSide(x2,y2,x3,y3);
+        double side1 = getSide(x1, y1, x2, y2);
+        double side2 = getSide(x1, y1, x3, y3);
+        double side3 = getSide(x2, y2, x3, y3);
 
         double perimeter = side1 + side2 + side3;
 
@@ -90,14 +90,14 @@ public class Triangle implements Shape {
 
     @Override
     public double getPerimeter() {
-        double side1 = getSide(x1,y1,x2,y2);
-        double side2 = getSide(x1,y1,x3,y3);
-        double side3 = getSide(x2,y2,x3,y3);
+        double side1 = getSide(x1, y1, x2, y2);
+        double side2 = getSide(x1, y1, x3, y3);
+        double side3 = getSide(x2, y2, x3, y3);
 
         return side1 + side2 + side3;
     }
 
-    private double getSide(double x1, double y1, double x2, double y2) {
+    private static double getSide(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 

@@ -3,6 +3,8 @@ package ru.academit.khrushchev.matrix.main;
 import ru.academit.khrushchev.matrix.matrix.Matrix;
 import ru.academit.khrushchev.vector.Vector;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Matrix matrix1 = new Matrix(3, 3);
@@ -11,11 +13,12 @@ public class Main {
         Matrix matrix3 = new Matrix(matrix2);
         Vector vector1 = new Vector(new double[]{2, 2, 2, 2});
 
-        Matrix matrix4 = new Matrix(new double[][]{{1, 2, 2}, {3, 1, 1}});
-        Matrix matrix5 = new Matrix(new double[][]{{4, 2}, {3, 1}, {1, 5}});
+        Matrix matrix4 = new Matrix(new double[][]{{4, 2}, {3, 1}, {1, 5}});
+        Matrix matrix5 = new Matrix(new double[][]{{1, 2, 2}, {3, 1, 1}});
 
         Vector[] rows = new Vector[]{new Vector(new double[]{1, 2, 3}), new Vector(new double[]{2, 3, 4}),
                 new Vector(new double[]{3, 4, 5})};
+
         Matrix matrix6 = new Matrix(rows);
 
         Matrix matrix7 = new Matrix(new double[][]{{1, 2, 3}, {2, 3, 4}, {3, 4, 5}});
@@ -63,10 +66,12 @@ public class Main {
 //
 //        System.out.println(Matrix.getSum(matrix7, matrix8));
 //        System.out.println(Matrix.getSum(matrix8, matrix7));
-//        System.out.println(Matrix.getSubtraction(matrix7, matrix8));
-//        System.out.println(Matrix.getSubtraction(matrix8, matrix7));
+//        System.out.println(Matrix.getDifference(matrix7, matrix8));
+//        System.out.println(Matrix.getDifference(matrix8, matrix7));
 
-//        System.out.println(Matrix.getProduct(matrix5, matrix4));
+        System.out.println(matrix4);
+        System.out.println(matrix5);
+        System.out.println(Matrix.getProduct(matrix5, matrix4));
 //
 //        System.out.println(matrix2.equals(matrix3));
     }

@@ -31,8 +31,8 @@ public class Main {
 //        System.out.println(list.deleteFirstElement());
 //        System.out.println(list);
 
-//        list.add(8, 4);
-//        System.out.println(list);
+        list.add(8, 2);
+        System.out.println(list);
 
 //        System.out.println(list);
 //        list.reverse();
