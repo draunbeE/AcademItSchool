@@ -21,7 +21,7 @@ public class Main {
             System.out.println("File was not found");
         }
 
-        ArrayList<Integer> integerNumbersList = new ArrayList<Integer>(Arrays.asList(3, 3, 3, 7, 4, 4, 5, 6, 7, 8, 9, 10, 11, 11));
+        ArrayList<Integer> integerNumbersList = new ArrayList<>(Arrays.asList(3, 3, 3, 7, 4, 4, 5, 6, 7, 8, 9, 10, 11, 11));
 
         for (int i = 0; i < integerNumbersList.size(); i++) {
             if (integerNumbersList.get(i) % 2 == 0) {
