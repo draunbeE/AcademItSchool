@@ -69,9 +69,9 @@ public class Main {
 //        System.out.println(Matrix.getDifference(matrix7, matrix8));
 //        System.out.println(Matrix.getDifference(matrix8, matrix7));
 
-        System.out.println(matrix4);
-        System.out.println(matrix5);
-        System.out.println(Matrix.getProduct(matrix5, matrix4));
+//        System.out.println(matrix4);
+//        System.out.println(matrix5);
+//        System.out.println(Matrix.getProduct(matrix5, matrix4));
 //
 //        System.out.println(matrix2.equals(matrix3));
     }

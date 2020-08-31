@@ -30,7 +30,7 @@ public class Matrix {
 
     public Matrix(double[][] matrix) {
         if (matrix.length == 0) {
-            throw new IllegalArgumentException("Matrix must have more than 0 rows");
+            throw new IllegalArgumentException("Matrix must have more than 0 rows. Now it is " + matrix.length);
         }
 
         int maxRowLength = 0;
@@ -54,7 +54,7 @@ public class Matrix {
 
     public Matrix(Vector[] rows) {
         if (rows.length == 0) {
-            throw new IllegalArgumentException("Rows amount must be more than 0");
+            throw new IllegalArgumentException("Rows amount must be more than 0. Now it is " + rows.length);
         }
 
         int maxRowLength = 0;
@@ -87,7 +87,7 @@ public class Matrix {
 
     public void setRow(Vector row, int rowIndex) {
         if (rowIndex < 0 || rowIndex >= rows.length) {
-            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount");
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount. Now it is " + rowIndex);
         }
 
         rows[rowIndex] = new Vector(row);
@@ -95,7 +95,7 @@ public class Matrix {
 
     public Vector getRow(int rowIndex) {
         if (rowIndex < 0 || rowIndex >= rows.length) {
-            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount");
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount. Now it is " + rowIndex);
         }
 
         return new Vector(rows[rowIndex]);
@@ -163,7 +163,7 @@ public class Matrix {
 
     private Matrix getMinor(int column) {
         if (column < 0 || column >= getColumnsAmount()) {
-            throw new IllegalArgumentException("Argument column must be >= 0 and less than row length");
+            throw new IllegalArgumentException("Argument column must be >= 0 and less than row length. Now it is " + column);
         }
 
         final int row = 0;
@@ -221,7 +221,9 @@ public class Matrix {
 
     public void add(Matrix matrix) {
         if (rows.length != matrix.rows.length || getColumnsAmount() != matrix.getColumnsAmount()) {
-            throw new IllegalArgumentException("Matrices sizes must be equal");
+            throw new IllegalArgumentException("Matrices sizes must be equal. Now employed matrix rows amount is " + rows.length +
+                    ", columns amount is " + getColumnsAmount() + ". And the argument matrix rows amount is " + matrix.rows.length +
+                    ", columns amount is " + matrix.getColumnsAmount());
         }
 
         for (int i = 0; i < rows.length; i++) {
@@ -231,7 +233,9 @@ public class Matrix {
 
     public void subtract(Matrix matrix) {
         if (rows.length != matrix.rows.length || getColumnsAmount() != matrix.getColumnsAmount()) {
-            throw new IllegalArgumentException("Matrices sizes must be equal");
+            throw new IllegalArgumentException("Matrices sizes must be equal. Now employed matrix rows amount is " + rows.length +
+                    ", columns amount is " + getColumnsAmount() + ". And the argument matrix rows amount is " + matrix.rows.length +
+                    ", columns amount is " + matrix.getColumnsAmount());
         }
 
         for (int i = 0; i < rows.length; i++) {
@@ -241,31 +245,34 @@ public class Matrix {
 
     public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
         if (matrix1.rows.length != matrix2.rows.length || matrix1.getColumnsAmount() != matrix2.getColumnsAmount()) {
-            throw new IllegalArgumentException("Matrices sizes must be equal");
+            throw new IllegalArgumentException("Matrices sizes must be equal. Now first matrix rows amount is " +
+                    matrix1.rows.length + ", columns amount is " + matrix1.getColumnsAmount() +
+                    ". And the second matrix rows amount is " + matrix2.rows.length + ", columns amount is "
+                    + matrix2.getColumnsAmount());
         }
 
         Matrix resultMatrix = new Matrix(matrix1);
-
         resultMatrix.add(matrix2);
-
         return resultMatrix;
     }
 
     public static Matrix getSubtraction(Matrix matrix1, Matrix matrix2) {
         if (matrix1.rows.length != matrix2.rows.length || matrix1.getColumnsAmount() != matrix2.getColumnsAmount()) {
-            throw new IllegalArgumentException("Matrices sizes must be equal");
+            throw new IllegalArgumentException("Matrices sizes must be equal. Now first matrix rows amount is " +
+                    matrix1.rows.length + ", columns amount is " + matrix1.getColumnsAmount() +
+                    ". And the second matrix rows amount is " + matrix2.rows.length + ", columns amount is "
+                    + matrix2.getColumnsAmount());
         }
 
         Matrix resultMatrix = new Matrix(matrix1);
-
         resultMatrix.subtract(matrix2);
-
         return resultMatrix;
     }
 
     public static Matrix getProduct(Matrix matrix1, Matrix matrix2) {
         if (matrix1.getColumnsAmount() != matrix2.rows.length) {
-            throw new IllegalArgumentException("Wrong matrices sizes");
+            throw new IllegalArgumentException("First matrix columns amount must be equal to the second matrix rows amount. " +
+                    "Now it is " + matrix1.getColumnsAmount() + " and " + matrix2.rows.length + " respectively.");
         }
 
         Matrix resultMatrix = new Matrix(matrix1.rows.length, matrix2.getColumnsAmount());
@@ -298,7 +305,7 @@ public class Matrix {
         stringBuilder.append("{");
 
         for (Vector row : rows) {
-            stringBuilder.append(row.toString()).append(", ");
+            stringBuilder.append(row).append(", ");
         }
 
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length()).append("}");
