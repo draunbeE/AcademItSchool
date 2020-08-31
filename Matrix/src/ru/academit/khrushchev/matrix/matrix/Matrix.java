@@ -9,8 +9,8 @@ public class Matrix {
 
     public Matrix(int rowsAmount, int columnsAmount) {
         if (rowsAmount == 0 || columnsAmount == 0) {
-            throw new IllegalArgumentException("Matrix sizes must be more than 0. Now rowsAmount is " + rowsAmount + ", " +
-                    "columnsAmount is " + columnsAmount + ".");
+            throw new IllegalArgumentException("Matrix sizes must be more than 0. Now rowsAmount is " + rowsAmount +
+                    ", columnsAmount is " + columnsAmount + ".");
         }
 
         rows = new Vector[rowsAmount];

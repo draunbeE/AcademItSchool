@@ -6,10 +6,10 @@ public class Main {
     public static void main(String[] args) {
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
 
-        list.add(5);
-        list.add(6);
-        list.add(7);
-        list.add(10);
+        list.insertAtTheBeginning(5);
+        list.insertAtTheBeginning(6);
+        list.insertAtTheBeginning(7);
+        list.insertAtTheBeginning(10);
 
 //        System.out.println(list.getSize());
 
@@ -31,7 +31,7 @@ public class Main {
 //        System.out.println(list.deleteFirstElement());
 //        System.out.println(list);
 
-        list.add(8, 2);
+        list.insertAtTheBeginning(8, 2);
         System.out.println(list);
 
 //        System.out.println(list);
@@ -43,6 +43,5 @@ public class Main {
 //        list.deleteData(0);
 //        System.out.println(list);
 //        System.out.println(newList);
-
     }
 }

@@ -2,20 +2,24 @@ package ru.academits.khrushchev.list;
 
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
-    private int listLength = 0;
+    private int length = 0;
 
     public SinglyLinkedList() {
     }
 
-    public void add(T data) {
+    public void insertAtTheBeginning(T data) {
         head = new ListItem<>(data, head);
 
-        listLength++;
+        length++;
     }
 
-    public void add(T data, int index) {
+    public void insertAtTheBeginning(T data, int index) {
+        if(index < 0 || index > length) {
+            throw new IllegalArgumentException("Index is out of bounds. Length is " + length + ". Index is " + index);
+        }
+
         if (index == 0) {
-            add(data);
+            insertAtTheBeginning(data);
             return;
         }
 
@@ -33,11 +37,11 @@ public class SinglyLinkedList<T> {
 
         previousItem.setNext(new ListItem<>(data, head));
         head = temp;
-        listLength++;
+        length++;
     }
 
     public int getSize() {
-        return listLength;
+        return length;
     }
 
     public T getFirstItemData() {
@@ -83,7 +87,7 @@ public class SinglyLinkedList<T> {
             T result = head.getData();
             head = head.getNext();
 
-            listLength--;
+            length--;
 
             return result;
         }
@@ -104,7 +108,7 @@ public class SinglyLinkedList<T> {
 
         T result = head.getData();
         head = temp;
-        listLength--;
+        length--;
 
         return result;
     }
@@ -130,7 +134,7 @@ public class SinglyLinkedList<T> {
                 head = temp;
             }
 
-            listLength--;
+            length--;
 
             return true;
         }
@@ -148,7 +152,7 @@ public class SinglyLinkedList<T> {
         SinglyLinkedList<T> newList = new SinglyLinkedList<>();
 
         while (head != null) {
-            newList.add(head.getData());
+            newList.insertAtTheBeginning(head.getData());
             head = head.getNext();
         }
 
@@ -159,14 +163,14 @@ public class SinglyLinkedList<T> {
         SinglyLinkedList<T> resultList = new SinglyLinkedList<>();
 
         resultList.head = head;
-        resultList.listLength = listLength;
+        resultList.length = length;
 
         return resultList;
     }
 
     @Override
     public String toString() {
-        if (listLength == 0) {
+        if (length == 0) {
             return "{}";
         }
 
