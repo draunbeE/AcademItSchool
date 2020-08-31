@@ -7,16 +7,16 @@ import java.util.Arrays;
 public class Matrix {
     private Vector[] rows;
 
-    public Matrix(int rowsAmount, int rowLength) {
-        if (rowsAmount == 0 || rowLength == 0) {
-            throw new IllegalArgumentException("Matrix sizes must be more than 0. Now rowsAmount is " + rowsAmount +
-                    " rowLength is " + +rowLength);
+    public Matrix(int rowsAmount, int columnsAmount) {
+        if (rowsAmount == 0 || columnsAmount == 0) {
+            throw new IllegalArgumentException("Matrix sizes must be more than 0. Now rowsAmount is " + rowsAmount + ", " +
+                    "columnsAmount is " + columnsAmount + ".");
         }
 
         rows = new Vector[rowsAmount];
 
         for (int i = 0; i < rows.length; i++) {
-            rows[i] = new Vector(rowLength);
+            rows[i] = new Vector(columnsAmount);
         }
     }
 
@@ -33,24 +33,14 @@ public class Matrix {
             throw new IllegalArgumentException("Matrix must have more than 0 rows");
         }
 
-        boolean hasAllRowsEmpty = true;
-
-        for (double[] row : matrix) {
-            if (row.length != 0) {
-                hasAllRowsEmpty = false;
-
-                break;
-            }
-        }
-
-        if (hasAllRowsEmpty) {
-            throw new IllegalArgumentException("All matrix rows are empty");
-        }
-
         int maxRowLength = 0;
 
         for (double[] row : matrix) {
             maxRowLength = Math.max(maxRowLength, row.length);
+        }
+
+        if (maxRowLength == 0) {
+            throw new IllegalArgumentException("All matrix rows are empty");
         }
 
         int rowsAmount = matrix.length;
@@ -74,18 +64,16 @@ public class Matrix {
         }
 
         int rowsAmount = rows.length;
-        int rowLength = maxRowLength;
         this.rows = new Vector[rowsAmount];
-        double[] components;
 
         for (int i = 0; i < rowsAmount; i++) {
-            components = new double[rowLength];
+            double[] components = new double[maxRowLength];
 
             for (int j = 0; j < rows[i].getSize(); j++) {
                 components[j] = rows[i].getComponent(j);
             }
 
-            this.rows[i] = new Vector(rowLength, components);
+            this.rows[i] = new Vector(maxRowLength, components);
         }
     }
 
@@ -221,10 +209,9 @@ public class Matrix {
         }
 
         Vector resultVector = new Vector(rows.length);
-        double resultNumber;
 
         for (int i = 0; i < rows.length; i++) {
-            resultNumber = Vector.getScalarProduct(rows[i], vector);
+            double resultNumber = Vector.getScalarProduct(rows[i], vector);
 
             resultVector.setComponent(i, resultNumber);
         }

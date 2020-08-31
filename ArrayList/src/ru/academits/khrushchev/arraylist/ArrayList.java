@@ -8,6 +8,7 @@ public class ArrayList<T> implements List<T> {
     private int size;
 
     public ArrayList() {
+        array = new Object[2];
     }
 
     public ArrayList(int capacity) {
