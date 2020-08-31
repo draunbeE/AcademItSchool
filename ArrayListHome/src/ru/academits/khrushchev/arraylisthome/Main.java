@@ -16,7 +16,6 @@ public class Main {
             }
 
             System.out.println(stringsList);
-
         } catch (FileNotFoundException e) {
             System.out.println("File was not found");
         }
