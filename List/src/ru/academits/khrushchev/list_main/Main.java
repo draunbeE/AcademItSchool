@@ -15,33 +15,39 @@ public class Main {
 
 //        System.out.println(list.getFirstItemData());
 
-//        list.print();
+//        System.out.println(list);
 //        System.out.println(list.getData(0));
-//        list.setData(1, 10);
-//
+//        System.out.println(list);
+
+//        System.out.println(list.setData(1, 10));
+//        System.out.println(list);
+
 //        System.out.println(list.getData(2));
 //        System.out.println(list.setData(3, 20));
 
-//        System.out.println(list.deleteData(2));
+//        System.out.println(list);
+//        System.out.println(list.deleteData(4));
 //        System.out.println(list);
 
-//        System.out.println(list.deleteData(Integer.valueOf(7)));
+//        System.out.println(list.deleteData(null));
 //        System.out.println(list);
 
 //        System.out.println(list.deleteFirstElement());
 //        System.out.println(list);
 
-        list.insertAtTheBeginning(8, 2);
-        System.out.println(list);
+//        list.insert(8, 4);
+//        System.out.println(list);
 
 //        System.out.println(list);
 //        list.reverse();
 //        System.out.println(list);
 
 //        System.out.println(list);
-//        SinglyLinkedList<Integer> newList = list.copy();
-//        list.deleteData(0);
+//        System.out.println(list.deleteData(Integer.valueOf(5)));
 //        System.out.println(list);
-//        System.out.println(newList);
+
+        System.out.println(list);
+        SinglyLinkedList<Integer> newList = list.copy();
+        System.out.println(newList);
     }
 }
