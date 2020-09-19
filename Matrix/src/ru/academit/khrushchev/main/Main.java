@@ -1,9 +1,7 @@
-package ru.academit.khrushchev.matrix.main;
+package ru.academit.khrushchev.main;
 
-import ru.academit.khrushchev.matrix.matrix.Matrix;
+import ru.academit.khrushchev.matrix.Matrix;
 import ru.academit.khrushchev.vector.Vector;
-
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -60,7 +58,7 @@ public class Main {
 //        System.out.println(matrix7);
 //        matrix8.subtract(matrix7);
 //        System.out.println(matrix8);
-
+//
 //        System.out.println(matrix7);
 //        System.out.println(matrix8);
 //
@@ -68,7 +66,7 @@ public class Main {
 //        System.out.println(Matrix.getSum(matrix8, matrix7));
 //        System.out.println(Matrix.getDifference(matrix7, matrix8));
 //        System.out.println(Matrix.getDifference(matrix8, matrix7));
-
+//
 //        System.out.println(matrix4);
 //        System.out.println(matrix5);
 //        System.out.println(Matrix.getProduct(matrix5, matrix4));

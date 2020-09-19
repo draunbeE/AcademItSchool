@@ -1,4 +1,4 @@
-package ru.academit.khrushchev.matrix.matrix;
+package ru.academit.khrushchev.matrix;
 
 import ru.academit.khrushchev.vector.Vector;
 
@@ -8,7 +8,7 @@ public class Matrix {
     private Vector[] rows;
 
     public Matrix(int rowsAmount, int columnsAmount) {
-        if (rowsAmount == 0 || columnsAmount == 0) {
+        if (rowsAmount <= 0 || columnsAmount <= 0) {
             throw new IllegalArgumentException("Matrix sizes must be more than 0. Now rowsAmount is " + rowsAmount +
                     ", columnsAmount is " + columnsAmount + ".");
         }
@@ -87,7 +87,8 @@ public class Matrix {
 
     public void setRow(Vector row, int rowIndex) {
         if (rowIndex < 0 || rowIndex >= rows.length) {
-            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount. Now it is " + rowIndex);
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount (" +
+                    getRowsAmount() + ") . Now index is " + rowIndex);
         }
 
         rows[rowIndex] = new Vector(row);
@@ -95,7 +96,8 @@ public class Matrix {
 
     public Vector getRow(int rowIndex) {
         if (rowIndex < 0 || rowIndex >= rows.length) {
-            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount. Now it is " + rowIndex);
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount (" +
+                    getRowsAmount() + ") . Now index is " + rowIndex);
         }
 
         return new Vector(rows[rowIndex]);
@@ -134,7 +136,7 @@ public class Matrix {
 
     public double getDeterminant() {
         if (rows.length != getColumnsAmount()) {
-            throw new IllegalArgumentException("Matrix must be square. Now sizes are " + rows.length +
+            throw new UnsupportedOperationException("Matrix must be square. Now sizes are " + rows.length +
                     " and " + getColumnsAmount());
         }
 
@@ -256,7 +258,7 @@ public class Matrix {
         return resultMatrix;
     }
 
-    public static Matrix getSubtraction(Matrix matrix1, Matrix matrix2) {
+    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
         if (matrix1.rows.length != matrix2.rows.length || matrix1.getColumnsAmount() != matrix2.getColumnsAmount()) {
             throw new IllegalArgumentException("Matrices sizes must be equal. Now first matrix rows amount is " +
                     matrix1.rows.length + ", columns amount is " + matrix1.getColumnsAmount() +
@@ -276,15 +278,13 @@ public class Matrix {
         }
 
         Matrix resultMatrix = new Matrix(matrix1.rows.length, matrix2.getColumnsAmount());
-        Vector currentRow;
-        Vector currentColumn;
         double resultNumber;
 
         for (int i = 0; i < matrix1.rows.length; i++) {
-            currentRow = matrix1.rows[i];
+            Vector currentRow = matrix1.rows[i];
 
             for (int j = 0; j < matrix2.getColumnsAmount(); j++) {
-                currentColumn = matrix2.getColumn(j);
+                Vector currentColumn = matrix2.getColumn(j);
                 resultNumber = 0;
 
                 for (int k = 0; k < currentColumn.getSize(); k++) {
