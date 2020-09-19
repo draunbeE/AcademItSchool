@@ -298,7 +298,11 @@ public class ArrayList<T> implements List<T> {
 
         T deletedElement = listElements[index];
         System.arraycopy(listElements, index + 1, listElements, index, size - index - 1);
-        listElements[size] = null;
+
+        if (listElements.length > size) {
+            listElements[size] = null;
+        }
+
         size--;
         modCount++;
 
