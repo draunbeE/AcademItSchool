@@ -182,7 +182,7 @@ public class HashTable<T> implements Collection<T> {
         }
 
         if (c.isEmpty()) {
-            return false; // не понял, что лучше возвращать в таком случае. Может исключение? Какое?
+            return false;
         }
 
         Iterator<T> iterator = (Iterator<T>) c.iterator();
