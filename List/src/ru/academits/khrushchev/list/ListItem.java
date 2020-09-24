@@ -24,4 +24,12 @@ public class ListItem<T> {
     public void setNext(ListItem<T> next) {
         this.next = next;
     }
+
+    public String toString() {
+        if(data == null) {
+            return "null";
+        }
+
+        return data.toString();
+    }
 }

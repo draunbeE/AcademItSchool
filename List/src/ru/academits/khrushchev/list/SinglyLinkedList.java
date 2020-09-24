@@ -4,10 +4,7 @@ import java.util.NoSuchElementException;
 
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
-    private int length = 0;
-
-    public SinglyLinkedList() {
-    }
+    private int length;
 
     public void insertAtTheBeginning(T data) {
         head = new ListItem<>(data, head);
@@ -15,9 +12,9 @@ public class SinglyLinkedList<T> {
         length++;
     }
 
-    public void insert(T data, int index) {
+    public void insert(int index, T data) {
         if (index < 0 || index > length) {
-            throw new IllegalArgumentException("Index is out of bounds. Length is " + length + ". Index is " + index);
+            throw new IndexOutOfBoundsException("Index is out of bounds. Length is " + length + ". Index is " + index);
         }
 
         if (index == 0) {
@@ -25,19 +22,8 @@ public class SinglyLinkedList<T> {
             return;
         }
 
-        int i = 0;
-
-        ListItem<T> item = head;
-        ListItem<T> previousItem = head;
-
-        while (i < index) {
-            previousItem = item;
-            item = item.getNext();
-
-            i++;
-        }
-
-        previousItem.setNext(new ListItem<>(data, item));
+        ListItem<T> item = getListItem(index - 1);
+        item.setNext(new ListItem<>(data, item.getNext()));
         length++;
     }
 
@@ -67,7 +53,7 @@ public class SinglyLinkedList<T> {
 
     public T getData(int index) {
         if (index < 0 || index >= length) {
-            throw new IllegalArgumentException("Index is out of bounds. Length is " + length + ". Index is " + index);
+            throw new IndexOutOfBoundsException("Index is out of bounds. Length is " + length + ". Index is " + index);
         }
 
         ListItem<T> item = getListItem(index);
@@ -77,47 +63,37 @@ public class SinglyLinkedList<T> {
 
     public T setData(int index, T data) {
         if (index < 0 || index >= length) {
-            throw new IllegalArgumentException("Index is out of bounds. Length is " + length + ". Index is " + index);
+            throw new IndexOutOfBoundsException("Index is out of bounds. Length is " + length + ". Index is " + index);
         }
 
-        ListItem<T> previousListItem = getListItem(index);
-        T previousValue = previousListItem.getData();
+        ListItem<T> changedListItem = getListItem(index);
+        T previousValue = changedListItem.getData();
 
-        previousListItem.setData(data);
+        changedListItem.setData(data);
 
         return previousValue;
     }
 
     public T deleteData(int index) {
         if (index < 0 || index >= length) {
-            throw new IllegalArgumentException("Index is out of bounds. Length is " + length + ". Index is " + index);
+            throw new IndexOutOfBoundsException("Index is out of bounds. Length is " + length + ". Index is " + index);
         }
 
         if (index == 0) {
-            T result = head.getData();
+            T deletedData = head.getData();
             head = head.getNext();
-
             length--;
 
-            return result;
+            return deletedData;
         }
 
-        int i = 0;
+        ListItem<T> previousItem = getListItem(index - 1);
+        ListItem<T> deletedItem = previousItem.getNext();
 
-        ListItem<T> item = head;
-        ListItem<T> previousItem = head;
-
-        while (i < index) {
-            previousItem = item;
-            item = item.getNext();
-
-            i++;
-        }
-
-        previousItem.setNext(item.getNext());
+        previousItem.setNext(previousItem.getNext().getNext());
         length--;
 
-        return item.getData();
+        return deletedItem.getData();
     }
 
     public boolean deleteData(T data) {
@@ -125,26 +101,49 @@ public class SinglyLinkedList<T> {
             return false;
         }
 
-        int i = 0;
+        if (head.getData() != null && head.getData().equals(data)) {
+            head = head.getNext();
+            length--;
+            return true;
+        }
+
+        if (head.getData() == null && data == null) {
+            head = head.getNext();
+            length--;
+            return true;
+        }
 
         ListItem<T> item = head;
         ListItem<T> previousItem = head;
 
-        while (item != null && !item.getData().equals(data)) {
+        while (item != null) {
+            if (item.getData() == null) {
+                if (data == null) {
+                    break;
+                }
+
+                while (item.getData() == null) {
+                    previousItem = item;
+                    item = item.getNext();
+
+                    if (item == null) {
+                        return false;
+                    }
+                }
+
+                continue;
+            }
+
+            if (item.getData().equals(data)) {
+                break;
+            }
+
             previousItem = item;
             item = item.getNext();
-
-            i++;
         }
 
         if (item == null) {
             return false;
-        }
-
-        if (i == 0) {
-            head = item.getNext();
-            length--;
-            return true;
         }
 
         previousItem.setNext(item.getNext());
@@ -154,38 +153,49 @@ public class SinglyLinkedList<T> {
     }
 
     public T deleteFirstElement() {
+        if (length == 0) {
+            throw new NoSuchElementException("List is empty");
+        }
+
         return deleteData(0);
     }
 
     public void reverse() {
-       ListItem<T> currentHead = head;
-       ListItem<T> newHead;
-       ListItem<T> next = null;
+        ListItem<T> currentHead = head;
+        ListItem<T> next = null;
 
-       while(currentHead != null) {
-           newHead = currentHead.getNext();
-           currentHead.setNext(next);
-           next = currentHead;
+        while (currentHead != null) {
+            ListItem<T> newHead = currentHead.getNext();
+            currentHead.setNext(next);
+            next = currentHead;
 
-           currentHead = newHead;
-       }
+            currentHead = newHead;
+        }
 
-       head = next;
+        head = next;
     }
 
     public SinglyLinkedList<T> copy() {
-        SinglyLinkedList<T> resultList = new SinglyLinkedList<>();
-
-        ListItem<T> item = head;
-        resultList.length = length;
-
-        while (item != null) {
-            resultList.insertAtTheBeginning(item.getData());
-
-            item = item.getNext();
+        if (length == 0) {
+            return new SinglyLinkedList<>();
         }
 
-        resultList.reverse();
+        SinglyLinkedList<T> resultList = new SinglyLinkedList<>();
+
+        ListItem<T> resultListHead = new ListItem<>(head.getData(), head.getNext());
+        ListItem<T> resultListNext = null;
+        ListItem<T> currentItem = head;
+
+        while (currentItem != null) {
+            resultList.insertAtTheBeginning(currentItem.getData());
+            resultList.head.setNext(resultListNext);
+            resultListNext = currentItem;
+
+            currentItem = currentItem.getNext();
+        }
+
+        resultList.head = resultListHead;
+        resultList.length = length;
 
         return resultList;
     }
