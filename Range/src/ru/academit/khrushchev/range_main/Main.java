@@ -1,4 +1,4 @@
-package ru.academit.khrushchev.main;
+package ru.academit.khrushchev.range_main;
 
 import ru.academit.khrushchev.range.Range;
 

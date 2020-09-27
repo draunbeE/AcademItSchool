@@ -85,15 +85,6 @@ public class Matrix {
         return rows[0].getSize();
     }
 
-    public void setRow(Vector row, int rowIndex) {
-        if (rowIndex < 0 || rowIndex >= rows.length) {
-            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount (" +
-                    getRowsAmount() + ") . Now index is " + rowIndex);
-        }
-
-        rows[rowIndex] = new Vector(row);
-    }
-
     public Vector getRow(int rowIndex) {
         if (rowIndex < 0 || rowIndex >= rows.length) {
             throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount (" +
@@ -101,6 +92,15 @@ public class Matrix {
         }
 
         return new Vector(rows[rowIndex]);
+    }
+
+    public void setRow(int rowIndex, Vector row) {
+        if (rowIndex < 0 || rowIndex >= rows.length) {
+            throw new IndexOutOfBoundsException("Argument rowIndex must be >= 0 and less than rows amount (" +
+                    getRowsAmount() + ") . Now index is " + rowIndex);
+        }
+
+        rows[rowIndex] = new Vector(row);
     }
 
     public Vector getColumn(int columnIndex) {
@@ -323,9 +323,9 @@ public class Matrix {
             return false;
         }
 
-        Matrix m = (Matrix) obj;
+        Matrix receivedMatrix = (Matrix) obj;
 
-        return Arrays.equals(m.rows, rows);
+        return Arrays.equals(receivedMatrix.rows, rows);
     }
 
     @Override

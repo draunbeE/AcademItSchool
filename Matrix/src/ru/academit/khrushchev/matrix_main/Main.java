@@ -1,4 +1,4 @@
-package ru.academit.khrushchev.main;
+package ru.academit.khrushchev.matrix_main;
 
 import ru.academit.khrushchev.matrix.Matrix;
 import ru.academit.khrushchev.vector.Vector;
@@ -27,7 +27,7 @@ public class Main {
 //        System.out.println(matrix6.getColumnsAmount());
 //
 //        System.out.println(matrix1);
-//        matrix1.setRow(vector1, 0);
+//        matrix1.setRow(0, vector1);
 //        System.out.println(matrix1);
 //
 //        System.out.println(matrix1.getRow(0));
