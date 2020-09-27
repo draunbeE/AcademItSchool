@@ -33,7 +33,8 @@ public class Main {
 //        array1 = arrayList1.toArray(array1);
 //        System.out.println(Arrays.toString(array1));
 //
-//        System.out.println(arrayList1.remove(Integer.valueOf(7)));
+//        System.out.println(arrayList1);
+//        System.out.println(arrayList1.remove(Integer.valueOf(4)));
 //        System.out.println(arrayList1);
 //
 //        System.out.println(arrayList1);

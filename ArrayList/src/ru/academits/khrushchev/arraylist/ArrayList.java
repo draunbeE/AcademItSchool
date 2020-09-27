@@ -122,9 +122,9 @@ public class ArrayList<T> implements List<T> {
             return false;
         }
 
-        System.arraycopy(elements, index + 1, elements, index, size - index);
+        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
 
-        elements[size] = null;
+        elements[size - 1] = null;
         size--;
         modCount++;
 
