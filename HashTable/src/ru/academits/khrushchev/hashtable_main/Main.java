@@ -13,7 +13,8 @@ public class Main {
 
         hashTable1.add(5);
         hashTable1.add(2);
-        hashTable1.add(31);
+        hashTable1.add(null);
+        hashTable1.add(15);
         hashTable1.add(3);
         hashTable1.add(11);
         hashTable1.add(8);
@@ -68,7 +69,7 @@ public class Main {
 //        System.out.println(hashTable3);
 
 //        System.out.println(hashTable1);
-//        System.out.println(hashTable1.remove(5));
+//        System.out.println(hashTable1.remove(null));
 //        System.out.println(hashTable1);
 
 //        System.out.println(hashTable1);
