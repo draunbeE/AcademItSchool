@@ -2,9 +2,9 @@ package ru.academits.khruschev;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
@@ -45,12 +45,42 @@ public class Main {
 //
 //        System.out.println(map);
 
-        Stream<Person> personsStream3 = persons.stream();
+//        Stream<Person> personsStream3 = persons.stream();
+//
+//        personsStream3.filter(person -> person.getAge() >= 20)
+//                .filter(person -> person.getAge() < 45)
+//                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
+//                .forEach(person -> System.out.println(person.getName()));
 
-        personsStream3.filter(person -> person.getAge() >= 20)
-                .filter(person -> person.getAge() < 45)
-                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
-                .forEach(person -> System.out.println(person.getName()));
+        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Type numbers amount to calculate and prints its squares: ");
+//        final int numbersAmount = scanner.nextInt();
+//
+//        IntStream numbersSquare = IntStream.iterate(0, number -> number < numbersAmount, number -> ++number)
+//                .map(number -> number * number);
+//        numbersSquare.forEach(System.out::println);
+
+        System.out.println("Type fibonacci numbers amount you want to get: ");
+        final int fibonacciNumbersAmount = scanner.nextInt();
+        AtomicInteger firstFibonacciNumber = new AtomicInteger();
+        AtomicInteger secondFibonacciNumber = new AtomicInteger(1);
+        AtomicInteger currentFibonacciNumber = new AtomicInteger();
+
+        IntStream fibonacciNumbers = IntStream
+                .iterate(1, fibonacciNumberIndex -> fibonacciNumberIndex <= fibonacciNumbersAmount,
+                        fibonacciNumberIndex -> {
+                            if (fibonacciNumberIndex == 1) {
+                                currentFibonacciNumber.set(1);
+                                return ++fibonacciNumberIndex;
+                            }
+
+                            currentFibonacciNumber.set(firstFibonacciNumber.get() + secondFibonacciNumber.get());
+                            firstFibonacciNumber.set(secondFibonacciNumber.get());
+                            secondFibonacciNumber.set(currentFibonacciNumber.get());
+
+                            return ++fibonacciNumberIndex;
+                        });
+        fibonacciNumbers.forEach(fibonacciNumberIndex -> System.out.println(currentFibonacciNumber));
     }
 }
 
