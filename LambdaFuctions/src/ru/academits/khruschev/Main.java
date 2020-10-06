@@ -2,8 +2,9 @@ package ru.academits.khruschev;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -30,57 +31,64 @@ public class Main {
                 new Person("Anton", 19)
         );
 
-//        Stream<Person> personStream1 = persons.stream();
-//
-//        String uniqueNames = personStream1.map(Person :: getName)
-//                .distinct()
-//                .collect(Collectors.joining(", ", "Names: ", "."));
-//
-//        System.out.println(uniqueNames);
-//
-//        Stream<Person> personsStream2 = persons.stream();
-//
-//        Map<String, Double> map = personsStream2
-//                .collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
-//
-//        System.out.println(map);
+        List<String> uniqueNamesList = persons.stream()
+                .map(Person::getName)
+                .distinct()
+                .collect(Collectors.toList());
 
-//        Stream<Person> personsStream3 = persons.stream();
-//
-//        personsStream3.filter(person -> person.getAge() >= 20)
-//                .filter(person -> person.getAge() < 45)
-//                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
-//                .forEach(person -> System.out.println(person.getName()));
+        System.out.println(uniqueNamesList);
+
+        String uniqueNamesString = persons.stream().map(Person::getName)
+                .distinct()
+                .collect(Collectors.joining(", ", "Names: ", "."));
+
+        System.out.println(uniqueNamesString);
+
+        double youngerThan18PersonsAverageAge = persons.stream()
+                .filter(person -> person.getAge() < 18)
+                .collect(Collectors.averagingDouble(Person::getAge));
+
+        System.out.println(youngerThan18PersonsAverageAge);
+
+        Map<String, Double> nameAverageAge = persons.stream()
+                .collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
+
+        System.out.println(nameAverageAge);
+
+        persons.stream().filter(person -> person.getAge() >= 20 && person.getAge() < 45)
+                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
+                .map(Person::getName)
+                .forEach(System.out::println);
 
         Scanner scanner = new Scanner(System.in);
-//        System.out.println("Type numbers amount to calculate and prints its squares: ");
-//        final int numbersAmount = scanner.nextInt();
-//
-//        IntStream numbersSquare = IntStream.iterate(0, number -> number < numbersAmount, number -> ++number)
-//                .map(number -> number * number);
-//        numbersSquare.forEach(System.out::println);
+        System.out.println("Type numbers amount to calculate and prints its squares: ");
+        final int numbersAmount = scanner.nextInt();
+
+        IntStream numbersSquare = IntStream.iterate(0, number -> number < numbersAmount, number -> number + 1)
+                .map(number -> number * number);
+        numbersSquare.forEach(System.out::println);
 
         System.out.println("Type fibonacci numbers amount you want to get: ");
         final int fibonacciNumbersAmount = scanner.nextInt();
-        AtomicInteger firstFibonacciNumber = new AtomicInteger();
-        AtomicInteger secondFibonacciNumber = new AtomicInteger(1);
-        AtomicInteger currentFibonacciNumber = new AtomicInteger();
 
-        IntStream fibonacciNumbers = IntStream
-                .iterate(1, fibonacciNumberIndex -> fibonacciNumberIndex <= fibonacciNumbersAmount,
-                        fibonacciNumberIndex -> {
-                            if (fibonacciNumberIndex == 1) {
-                                currentFibonacciNumber.set(1);
-                                return ++fibonacciNumberIndex;
-                            }
+        int[] twoFibonacciNumbers = new int[]{0, 1};
+        boolean[] isThirdNumber = new boolean[]{true};
 
-                            currentFibonacciNumber.set(firstFibonacciNumber.get() + secondFibonacciNumber.get());
-                            firstFibonacciNumber.set(secondFibonacciNumber.get());
-                            secondFibonacciNumber.set(currentFibonacciNumber.get());
+        IntStream fibonacciNumbers2 = IntStream
+                .iterate(0, currentFibonacciNumber -> {
+                    if (twoFibonacciNumbers[0] == 1 && twoFibonacciNumbers[1] == 1 && isThirdNumber[0]) {
+                        isThirdNumber[0] = false;
+                        return 1;
+                    }
 
-                            return ++fibonacciNumberIndex;
-                        });
-        fibonacciNumbers.forEach(fibonacciNumberIndex -> System.out.println(currentFibonacciNumber));
+                    currentFibonacciNumber = twoFibonacciNumbers[0] + twoFibonacciNumbers[1];
+                    twoFibonacciNumbers[0] = twoFibonacciNumbers[1];
+                    twoFibonacciNumbers[1] = currentFibonacciNumber;
+
+                    return currentFibonacciNumber;
+                });
+
+        fibonacciNumbers2.limit(fibonacciNumbersAmount).forEach(System.out::println);
     }
 }
 
